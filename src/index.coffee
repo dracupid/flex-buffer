@@ -17,16 +17,16 @@ class FlexBuffer
          * @private
         ###
         @_resizeTime = 0
-        if Buffer.isBuffer arg
+        if typeof arg is 'number'
+            @_buffer = new Buffer arg
+            @length = 0
+        else if Buffer.isBuffer arg
             @_buffer = arg
             ###*
              * length of data part
              * @type {Number}
             ###
             @length = arg.length
-        else if typeof arg is 'number'
-            @_buffer = new Buffer arg
-            @length = 0
         else
             @_buffer = new Buffer arg, opts.encoding
             @length = @_buffer.length
@@ -71,40 +71,54 @@ class FlexBuffer
         if @length + delta > @_buffer.length
             @_resize(delta)
 
-    _writeByte: (byte) ->
-        if typeof byte is 'string'
-            byte = byte.charCodeAt 0
-        @_buffer[@length++] = byte
+
+    _writeByte: (byteNum) ->
+        @_buffer[@length++] = byteNum
+
+    _writeNumber: (num) ->
+        @_resizeIfRequired 1
+        @_writeByte num
+        1
+
+    _writeBuffer: (buf) ->
+        len = buf.length
+        @_resizeIfRequired len
+
+        buf.copy @_buffer, @length
+        @length += len
+        len
+
+    _writeArray: (arr) ->
+        len = arr.length
+        @_resizeIfRequired len
+
+        for i in arr
+            @_writeByte i
+        len
+
+    _writeString: (str, encoding) ->
+        len = Buffer.byteLength str, encoding
+        @_resizeIfRequired len
+        @_buffer.write str, @length, len, encoding
+        @length += len
+        len
 
     ###*
      * Write/append a byte | array of bytes | buffer | string to the block
      * @param  {number | string | Array | Buffer}  value     The value to write
+     * @param  {string="utf8"}                     encoding  string encoding
     ###
-    write: (value) ->
-        length = (
-            if Buffer.isBuffer(value) or Array.isArray value
-                value.length
-            else if typeof value is 'string'
-                Buffer.byteLength value
-            else
-                1
-        )
-        @_resizeIfRequired length
-
-        if Buffer.isBuffer value
-            value.copy @_buffer, @length
-            @length += length
+    write: (value, encoding) ->
+        if typeof value is 'number'
+            @_writeNumber value
+        else if Buffer.isBuffer value
+            @_writeBuffer value
         else if Array.isArray value
-            for i in value
-                @_writeByte i
+            @_writeArray value
         else if typeof value is 'string'
-            value = new Buffer value
-            value.copy @_buffer, @length
-            @length += length
+            @_writeString value, encoding
         else
-            @_writeByte value
-
-        length
+            throw TypeError "Unvalid data type"
 
     ###*
      * The same as Buffer.slice applied on data part of the buffer, with an additional newBuffer argument.
@@ -153,20 +167,10 @@ Object.defineProperties FlexBuffer::,
 
 # Extend native Buffer API
 
-[_main, _minor] = process.versions.node.split '.'
-
 _writerBuilder = (len, k, v) ->
     FlexBuffer::[k] = (val) ->
-        while true
-            try
-                v.call @_buffer, val, @length, false
-                break
-            catch e
-                # node v0.8 AssertionError; others RangeError
-                if e instanceof RangeError or e.name is 'AssertionError'
-                    @_resize len
-                else
-                    throw e
+        @_resizeIfRequired len
+        v.call @_buffer, val, @length, false
         @length += len
         len
 
@@ -175,31 +179,19 @@ for k, v of Buffer::
         continue
 
     if k.indexOf('write') is 0
-        if _main <= 0 and _minor <= 10
-            do (k, v) ->
-                arr = k.match /\d+/
-                if arr and arr[0]
-                    _writerBuilder.call @, parseInt(arr[0]) / 8, k, v
-                else if /Double/.test k
-                    _writerBuilder.call @, 8, k, v
-                else if /Float/.test k
-                    _writerBuilder.call @, 4, k, v
-        else
-            do (k, v) ->
-                FlexBuffer::[k] = (val) ->
-                    len = 0
-                    while true
-                        try
-                            offset = @length
-                            len = v.call(@_buffer, val, @length, false) - offset
-                            break
-                        catch e
-                            # node v0.8 AssertionError; others RangeError
-                            if e instanceof RangeError or e.name is 'AssertionError'
-                                @_resize 8
-                            else
-                                throw e
-                    @length += len
+        do (k, v) ->
+            arr = k.match /\d+/
+            if arr and arr[0]
+                _writerBuilder.call @, parseInt(arr[0]) / 8, k, v
+            else if /Double/.test k
+                _writerBuilder.call @, 8, k, v
+            else if /Float/.test k
+                _writerBuilder.call @, 4, k, v
+            else
+                FlexBuffer::[k] = (val, byteLength) ->
+                    @_resizeIfRequired 6
+                    len = v.call @_buffer, val, @length, byteLength, false
+                    @length = len
                     len
     else
         do (k, v) ->
