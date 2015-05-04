@@ -4,6 +4,7 @@ A flexible buffer with a complete but limited Buffer API.
 - New data can only be appended.
 - Written data and free space is distinguished. Only data part is accessible.
 - Buffer size will auto-grow when it is not enough.
+- Tested on Node 0.8-0.12, latest iojs on Mac, Linux and Windows.
 
 [![NPM version](https://badge.fury.io/js/flex-buffer.svg)](https://www.npmjs.com/package/flex-buffer)
 [![Deps](https://david-dm.org/dracupid/flex-buffer.svg?style=flat)](https://david-dm.org/dracupid/flex-buffer)
@@ -28,7 +29,7 @@ fBuf.writeUInt32LE(165);
 ## API
 
 
-- #### <a href="./src/index.coffee?source#L15" target="_blank"><b>constructor(arg, opts = {})</b></a>
+- #### <a href="./src/index.coffee?source#L13" target="_blank"><b>constructor(arg, opts = {})</b></a>
   Flex Buffer constructor
 
   - **<u>param</u>**: `arg` { _number | Buffer | Array | string_ }
@@ -51,31 +52,31 @@ fBuf.writeUInt32LE(165);
 
     SAFE_BUFFER_LENGTH
 
-- #### <a href="./src/index.coffee?source#L28" target="_blank"><b>length</b></a>
+- #### <a href="./src/index.coffee?source#L26" target="_blank"><b>length</b></a>
   length of data part
 
   - **<u>type</u>**: { _Number_ }
 
-- #### <a href="./src/index.coffee?source#L42" target="_blank"><b>GROW\_FACTOR</b></a>
+- #### <a href="./src/index.coffee?source#L40" target="_blank"><b>GROW\_FACTOR</b></a>
   Grow factor of the flex buffer. </br>
   > If the buffer is full, it will be resized to its `origin length * grow factor` <br/>
   > If grow factor is 0, the buffer will be resized to its `origin length + input data's length`
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L47" target="_blank"><b>SAFE\_BUFFER_LENGTH</b></a>
+- #### <a href="./src/index.coffee?source#L45" target="_blank"><b>SAFE\_BUFFER_LENGTH</b></a>
   If buffer length exceeds this length, it will grow as grow factor is 0.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L85" target="_blank"><b>write(value)</b></a>
+- #### <a href="./src/index.coffee?source#L83" target="_blank"><b>write(value)</b></a>
   Write/append a byte | array of bytes | buffer | string to the block
 
   - **<u>param</u>**: `value` { _number | string | Array | Buffer_ }
 
     The value to write
 
-- #### <a href="./src/index.coffee?source#L118" target="_blank"><b>slice(start =  0, end =  this.length, newBuffer = false)</b></a>
+- #### <a href="./src/index.coffee?source#L116" target="_blank"><b>slice(start =  0, end =  this.length, newBuffer = false)</b></a>
   The same as Buffer.slice applied on data part of the buffer, with an additional newBuffer argument.
 
   - **<u>param</u>**: `start` { _number = 0_ }
@@ -94,7 +95,7 @@ fBuf.writeUInt32LE(165);
 
     data buffer
 
-- #### <a href="./src/index.coffee?source#L127" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
+- #### <a href="./src/index.coffee?source#L125" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
   Return data part of the buffer.
 
   - **<u>param</u>**: `newBuffer` { _boolean=false_ }
@@ -105,12 +106,12 @@ fBuf.writeUInt32LE(165);
 
     data buffer
 
-- #### <a href="./src/index.coffee?source#L147" target="_blank"><b>bufferLength</b></a>
+- #### <a href="./src/index.coffee?source#L145" target="_blank"><b>bufferLength</b></a>
   internal buffer's length, including free space.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L153" target="_blank"><b>freeLength</b></a>
+- #### <a href="./src/index.coffee?source#L151" target="_blank"><b>freeLength</b></a>
   free space length
 
   - **<u>type</u>**: { _number_ }

@@ -4,6 +4,7 @@ A flexible buffer with a complete but limited Buffer API.
 - New data can only be appended.
 - Written data and free space is distinguished. Only data part is accessible.
 - Buffer size will auto-grow when it is not enough.
+- Tested on Node 0.8-0.12, latest iojs on Mac, Linux and Windows.
 
 [![NPM version](https://badge.fury.io/js/flex-buffer.svg)](https://www.npmjs.com/package/flex-buffer)
 [![Deps](https://david-dm.org/dracupid/flex-buffer.svg?style=flat)](https://david-dm.org/dracupid/flex-buffer)

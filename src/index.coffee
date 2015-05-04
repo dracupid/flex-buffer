@@ -1,8 +1,6 @@
 DEFAULT_SAFE_BUFFER_LENGTH = 10 * 1024 * 1024 # 10M
 DEFAULT_GROW_FACTOR = 2
 
-util = require 'util'
-
 class FlexBuffer
     ###*
      * Flex Buffer constructor
@@ -157,19 +155,20 @@ Object.defineProperties FlexBuffer::,
 
 [_main, _minor] = process.versions.node.split '.'
 
-_writerBuilder = (_len, k, v) ->
+_writerBuilder = (len, k, v) ->
     FlexBuffer::[k] = (val) ->
         while true
             try
                 v.call @_buffer, val, @length, false
                 break
             catch e
-                if e instanceof RangeError
-                    @_resize _len
+                # node v0.8 AssertionError; others RangeError
+                if e instanceof RangeError or e.name is 'AssertionError'
+                    @_resize len
                 else
                     throw e
-        @length += _len
-        _len
+        @length += len
+        len
 
 for k, v of Buffer::
     if FlexBuffer::[k]? or typeof v isnt 'function'
@@ -196,7 +195,7 @@ for k, v of Buffer::
                             break
                         catch e
                             # node v0.8 AssertionError; others RangeError
-                            if e instanceof RangeError or e instanceof AssertionError
+                            if e instanceof RangeError or e.name is 'AssertionError'
                                 @_resize 8
                             else
                                 throw e
