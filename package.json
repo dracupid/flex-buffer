@@ -13,6 +13,7 @@
     "dist"
   ],
   "devDependencies": {
+    "benchmark": "git+https://github.com/bestiejs/benchmark.js.git",
     "coffee-script": "^1.9.2",
     "coffeelint": "^1.9.4",
     "mocha": "^2.2.4",

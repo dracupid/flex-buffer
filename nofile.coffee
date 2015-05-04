@@ -26,4 +26,9 @@ module.exports = (task) ->
         .catch ->
             process.exit 1
 
+    task 'benchmark', ->
+        kit.spawn 'coffee', ['./benchmark/benchmark.coffee']
+        .catch ->
+            process.exit 1
+
     task 'default', ['build', 'doc']
