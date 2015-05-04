@@ -1,0 +1,44 @@
+{
+  "name": "flex-buffer",
+  "version": "0.0.1",
+  "description": "A flexible buffer with a complete but limited Buffer API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "no test",
+    "prepublish": "no"
+  },
+  "author": "dracupid <dracupid@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "coffee-script": "^1.9.2",
+    "coffeelint": "^1.9.4",
+    "mocha": "^2.2.4",
+    "nodoc": "^0.2.1",
+    "nokit": "^0.6.2"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "coffeelint": "^1.9.4",
+    "nodoc": "^0.2.1",
+    "nokit": "^0.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dracupid/flex-buffer.git"
+  },
+  "keywords": [
+    "flex",
+    "buffer",
+    "resize",
+    "auto"
+  ],
+  "bugs": {
+    "url": "https://github.com/dracupid/flex-buffer/issues"
+  },
+  "homepage": "https://github.com/dracupid/flex-buffer#readme"
+}

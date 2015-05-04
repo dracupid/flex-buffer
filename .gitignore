@@ -1,0 +1,6 @@
+*.log
+node_modules
+.nobone
+.nokit
+.coffee
+dist
