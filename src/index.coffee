@@ -177,7 +177,6 @@ for k, v of Buffer::
 
     if k.indexOf('write') is 0
         if _main <= 0 and _minor <= 10
-            console.log '123dasd'
             do (k, v) ->
                 arr = k.match /\d+/
                 if arr and arr[0]
@@ -196,7 +195,8 @@ for k, v of Buffer::
                             len = v.call(@_buffer, val, @length, false) - offset
                             break
                         catch e
-                            if e instanceof RangeError
+                            # node v0.8 AssertionError; others RangeError
+                            if e instanceof RangeError or e instanceof AssertionError
                                 @_resize 8
                             else
                                 throw e

@@ -16,16 +16,11 @@
     "coffee-script": "^1.9.2",
     "coffeelint": "^1.9.4",
     "mocha": "^2.2.4",
-    "nodoc": "^0.2.1",
+    "nodoc": "^0.2.2",
     "nokit": "^0.6.2"
   },
   "directories": {
     "test": "test"
-  },
-  "dependencies": {
-    "coffeelint": "^1.9.4",
-    "nodoc": "^0.2.1",
-    "nokit": "^0.6.2"
   },
   "repository": {
     "type": "git",
