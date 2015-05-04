@@ -133,6 +133,13 @@ describe "extended Buffer write API", ->
         eq buf.length, 4
         eq buf._resizeTime, 1
 
+    if testBuf.equals
+        it '#writeUIntLE', ->
+            buf = new FB 10
+            buf.writeUIntLE 1357, 3
+            eq 0, buf._resizeTime
+            eq 3, buf.length
+
     it '#write in sequence', ->
         buf = new FB 8
         eq 2, buf.writeInt16LE 123
@@ -141,4 +148,3 @@ describe "extended Buffer write API", ->
 
         eq 14, buf.length
         eq 1, buf._resizeTime
-
