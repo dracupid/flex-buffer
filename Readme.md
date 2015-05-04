@@ -52,7 +52,7 @@ fBuf.writeUInt32LE(165);
 
     SAFE_BUFFER_LENGTH
 
-- #### <a href="./src/index.coffee?source#L26" target="_blank"><b>length</b></a>
+- #### <a href="./src/index.coffee?source#L29" target="_blank"><b>length</b></a>
   length of data part
 
   - **<u>type</u>**: { _Number_ }
@@ -69,14 +69,18 @@ fBuf.writeUInt32LE(165);
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L83" target="_blank"><b>write(value)</b></a>
+- #### <a href="./src/index.coffee?source#L111" target="_blank"><b>write(value, encoding = "utf8")</b></a>
   Write/append a byte | array of bytes | buffer | string to the block
 
   - **<u>param</u>**: `value` { _number | string | Array | Buffer_ }
 
     The value to write
 
-- #### <a href="./src/index.coffee?source#L116" target="_blank"><b>slice(start =  0, end =  this.length, newBuffer = false)</b></a>
+  - **<u>param</u>**: `encoding` { _string="utf8"_ }
+
+    string encoding
+
+- #### <a href="./src/index.coffee?source#L130" target="_blank"><b>slice(start =  0, end =  this.length, newBuffer = false)</b></a>
   The same as Buffer.slice applied on data part of the buffer, with an additional newBuffer argument.
 
   - **<u>param</u>**: `start` { _number = 0_ }
@@ -95,7 +99,7 @@ fBuf.writeUInt32LE(165);
 
     data buffer
 
-- #### <a href="./src/index.coffee?source#L125" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
+- #### <a href="./src/index.coffee?source#L139" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
   Return data part of the buffer.
 
   - **<u>param</u>**: `newBuffer` { _boolean=false_ }
@@ -106,24 +110,43 @@ fBuf.writeUInt32LE(165);
 
     data buffer
 
-- #### <a href="./src/index.coffee?source#L145" target="_blank"><b>bufferLength</b></a>
+- #### <a href="./src/index.coffee?source#L159" target="_blank"><b>bufferLength</b></a>
   internal buffer's length, including free space.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L151" target="_blank"><b>freeLength</b></a>
+- #### <a href="./src/index.coffee?source#L165" target="_blank"><b>freeLength</b></a>
   free space length
 
   - **<u>type</u>**: { _number_ }
 
 
 
-__All the [native Buffer API](https://iojs.org/api/buffer.html) is preserved. However, write* methods can only append data, with no `offset` argument.__
+__All the [native Buffer API](https://iojs.org/api/buffer.html) is wrapped. However, write* methods can only append data, with no `offset` argument.__
 
 ## Test
 ```
 npm test
 ```
+
+## Benchmark
+Environment: io.js v1.8.1, OS X 10.10.2, Intel(R) Core(TM) i7-4870HQ CPU @ 2.50GHz
+- Write Number
+    - Buffer x 2,308,113 ops/sec ±0.71% (94 runs sampled)
+    - FlexBuffer x 1,568,507 ops/sec ±1.27% (90 runs sampled)
+    - FlexBuffer-8 x 487,534 ops/sec ±0.94% (90 runs sampled)
+    - FlexBuffer-16 x 844,856 ops/sec ±1.04% (88 runs sampled)
+    - FlexBuffer-32 x 1,102,538 ops/sec ±0.94% (88 runs sampled)
+
+- Write String
+    - Buffer x 2,703,146 ops/sec ±1.75% (84 runs sampled)
+    - FlexBuffer x 1,834,996 ops/sec ±1.13% (90 runs sampled)
+    - FlexBuffer-2 x 1,212,164 ops/sec ±0.98% (88 runs sampled)
+
+- wrapped native API
+    - Buffer x 3,065,486 ops/sec ±1.11% (80 runs sampled)
+    - FlexBuffer x 2,895,890 ops/sec ±1.15% (90 runs sampled)
+    - FlexBuffer-2 x 1,191,723 ops/sec ±0.98% (91 runs sampled)
 
 ## License
 MIT
