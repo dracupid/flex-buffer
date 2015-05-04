@@ -50,8 +50,8 @@ class FlexBuffer
     _newBufferSize: (delta) ->
         if not @_buffer.length
             delta
-        else if @_buffer.length < @SAFE_BUFFER_LENGTH
-            newSize = @_buffer.length * 2
+        else if @_buffer.length < @SAFE_BUFFER_LENGTH and @GROW_FACTOR isnt 0
+            newSize = @_buffer.length * @GROW_FACTOR
             if newSize - @_buffer.length > delta
                 newSize
             else
@@ -120,7 +120,7 @@ class FlexBuffer
         if newBuffer then new Buffer _buf else _buf
 
     ###*
-     * Return data part in the buffer.
+     * Return data part of the buffer.
      * @param  {boolean=false} newBuffer   return a new Buffer instance.
      * @return {Buffer}              data buffer
     ###
