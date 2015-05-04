@@ -26,7 +26,7 @@ class FlexBuffer
              * @type {Number}
             ###
             @length = arg.length
-        else if util.isNumber arg
+        else if typeof arg is 'number'
             @_buffer = new Buffer arg
             @length = 0
         else
@@ -74,7 +74,7 @@ class FlexBuffer
             @_resize(delta)
 
     _writeByte: (byte) ->
-        if util.isString byte
+        if typeof byte is 'string'
             byte = byte.charCodeAt 0
         @_buffer[@length++] = byte
 
@@ -86,7 +86,7 @@ class FlexBuffer
         length = (
             if Buffer.isBuffer(value) or Array.isArray value
                 value.length
-            else if util.isString value
+            else if typeof value is 'string'
                 Buffer.byteLength value
             else
                 1
@@ -99,7 +99,7 @@ class FlexBuffer
         else if Array.isArray value
             for i in value
                 @_writeByte i
-        else if util.isString value
+        else if typeof value is 'string'
             value = new Buffer value
             value.copy @_buffer, @length
             @length += length
@@ -154,26 +154,54 @@ Object.defineProperties FlexBuffer::,
         get: -> @_buffer.length - @length
 
 # Extend native Buffer API
+
+[_main, _minor] = process.versions.node.split '.'
+
+_writerBuilder = (_len, k, v) ->
+    FlexBuffer::[k] = (val) ->
+        while true
+            try
+                v.call @_buffer, val, @length, false
+                break
+            catch e
+                if e instanceof RangeError
+                    @_resize _len
+                else
+                    throw e
+        @length += _len
+        _len
+
 for k, v of Buffer::
     if FlexBuffer::[k]? or typeof v isnt 'function'
         continue
 
     if k.indexOf('write') is 0
-        do (k, v) ->
-            FlexBuffer::[k] = (val) ->
-                len = 0
-                while true
-                    try
-                        offset = @length
-                        len = v.call(@_buffer, val, @length, false) - offset
-                        break
-                    catch e
-                        if e instanceof RangeError
-                            @_resize 8
-                        else
-                            throw e
-                @length += len
-                len
+        if _main <= 0 and _minor <= 10
+            console.log '123dasd'
+            do (k, v) ->
+                arr = k.match /\d+/
+                if arr and arr[0]
+                    _writerBuilder.call @, parseInt(arr[0]) / 8, k, v
+                else if /Double/.test k
+                    _writerBuilder.call @, 8, k, v
+                else if /Float/.test k
+                    _writerBuilder.call @, 4, k, v
+        else
+            do (k, v) ->
+                FlexBuffer::[k] = (val) ->
+                    len = 0
+                    while true
+                        try
+                            offset = @length
+                            len = v.call(@_buffer, val, @length, false) - offset
+                            break
+                        catch e
+                            if e instanceof RangeError
+                                @_resize 8
+                            else
+                                throw e
+                    @length += len
+                    len
     else
         do (k, v) ->
             FlexBuffer::[k] = ->

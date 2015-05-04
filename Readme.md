@@ -95,7 +95,7 @@ fBuf.writeUInt32LE(165);
     data buffer
 
 - #### <a href="./src/index.coffee?source#L127" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
-  Return data part in the buffer.
+  Return data part of the buffer.
 
   - **<u>param</u>**: `newBuffer` { _boolean=false_ }
 

@@ -15,7 +15,7 @@ module.exports = (task) ->
         nodoc = require 'nodoc'
         data = {}
 
-        Promise.all [nodoc.generate('./src/index.coffee', moduleName: ''), kit.readFile('./src/Readme.tpl', encoding: 'utf8')]
+        kit.Promise.all [nodoc.generate('./src/index.coffee', moduleName: ''), kit.readFile('./src/Readme.tpl', encoding: 'utf8')]
         .then ([api, tpl]) ->
             _.template(tpl) {api}
         .then (md)->
@@ -23,5 +23,7 @@ module.exports = (task) ->
 
     task 'test', ->
         kit.spawn 'mocha', ['-r', 'coffee-script/register', 'test/index.coffee']
+        .catch ->
+            process.exit 1
 
     task 'default', ['build', 'doc']

@@ -3,7 +3,9 @@ assert = require 'assert'
 util = require 'util'
 
 eq = assert.strictEqual
-deq = assert.deepStrictEqual
+deq = assert.deepStrictEqual or assert.deepEqual
+
+testBuf = new Buffer 1
 
 describe "create FlexBuffer", ->
     it "from no size", ->
@@ -115,13 +117,14 @@ describe "convert", ->
         eq buf.toString(), "ABD"
 
 describe "extended Buffer util API", ->
-    it '#equals', ->
-        buf = new FB "asdsd"
-        assert buf.equals new Buffer "asdsd"
-
-    it '#indexOf', ->
-        buf = new FB "asdsd"
-        eq 2, buf.indexOf 'd'
+    if testBuf.equals
+        it '#equals', ->
+            buf = new FB "asdsd"
+            assert buf.equals new Buffer "asdsd"
+    if testBuf.indexOf
+        it '#indexOf', ->
+            buf = new FB "asdsd"
+            eq 2, buf.indexOf 'd'
 
 describe "extended Buffer write API", ->
     it '#writeInt32LE', ->
