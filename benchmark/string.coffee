@@ -3,18 +3,15 @@ FB = require '../src'
 
 suite = new Benchmark.Suite()
 suite.on 'start', ->
-    console.log "\n- wrapped native API"
+    console.log "\n- Write String"
 .add "Buffer", ->
-    a = new Buffer 200
-    a.writeDoubleLE 10.10, 0
-    a.writeInt32LE 19, 8
+    a = new Buffer 100
+    a.write '1ad得', 0
 .add "FlexBuffer", ->
-    a = new FB 200
-    a.writeDoubleLE 10.10
-    a.writeInt32LE 19
+    a = new FB 100
+    a.write '1ad得'
 .add "FlexBuffer-2", ->
     a = new FB 2
-    a.writeDoubleLE 10.10
-    a.writeInt32LE 19
+    a.write '1ad得'
 .on 'cycle', (e) -> console.log "    - " + e.target
 .run 'async': false
