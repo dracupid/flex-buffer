@@ -18,7 +18,9 @@
     "coffeelint": "^1.9.4",
     "mocha": "^2.2.4",
     "nodoc": "^0.2.2",
-    "nokit": "^0.6.2"
+    "nokit": "^0.6.2",
+    "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git"
+
   },
   "directories": {
     "test": "test"
