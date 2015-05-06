@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "no test",
+    "benchmark": "no benchmark",
     "prepublish": "no"
   },
   "author": "dracupid <dracupid@gmail.com>",
@@ -17,8 +18,8 @@
     "coffee-script": "*",
     "coffeelint": "*",
     "mocha": "^2.2.4",
-    "nodoc": "^0.2.2",
-    "nokit": "^0.6.3",
+    "nodoc": "^0.2.3",
+    "nokit": "^0.6.5",
     "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git"
   },
   "directories": {

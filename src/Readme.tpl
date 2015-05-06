@@ -37,7 +37,13 @@ npm test
 ```
 
 ## Benchmark
+```
+npm run benchmark
+```
+
 Environment: io.js v1.8.1, OS X 10.10.2, Intel(R) Core(TM) i7-4870HQ CPU @ 2.50GHz
+
+These tasks are running parallel.
 - Write Number
     - Buffer x 2,308,113 ops/sec ±0.71% (94 runs sampled)
     - FlexBuffer x 1,568,507 ops/sec ±1.27% (90 runs sampled)

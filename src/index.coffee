@@ -54,7 +54,6 @@ class FlexBuffer
             @_writeOffset = 0
         else if Buffer.isBuffer arg
             @_buffer = arg
-
             @_writeOffset = arg.length
         else
             @_buffer = new Buffer arg, opts.encoding
@@ -167,6 +166,7 @@ class FlexBuffer
 
     ###*
      * Release the buffer and create a buffer using initial state.
+     * @param
     ###
     reset: ->
         @_resizeTime = 0
@@ -175,6 +175,7 @@ class FlexBuffer
 
     ###*
      * Release the buffer
+     * @param
     ###
     release: ->
         @_buffer = null
@@ -182,6 +183,7 @@ class FlexBuffer
 
     ###*
      * Flush the buffer, clear all data, won't release space.
+     * @param
     ###
     flush: ->
         @_writeOffset = 0
@@ -195,7 +197,7 @@ Object.defineProperties FlexBuffer::,
         get: -> if @_buffer then @_buffer.length else 0
     ###*
      * length of data part
-     * @type {Number}
+     * @type {number}
     ###
     'length':
         get: -> @_writeOffset
