@@ -224,10 +224,10 @@ for k, v of Buffer::
                 _writerBuilder.call @, 4, k, v
             else
                 FlexBuffer::[k] = (val, byteLength) ->
-                    @_resizeIfRequired 6
-                    len = v.call @_buffer, val, @_writeOffset, byteLength, false
-                    @_writeOffset = len
-                    len
+                    @_resizeIfRequired byteLength
+                    v.call @_buffer, val, @_writeOffset, byteLength, false
+                    @_writeOffset += byteLength
+                    byteLength
     else
         do (k, v) ->
             FlexBuffer::[k] = ->
