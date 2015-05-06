@@ -51,17 +51,14 @@ class FlexBuffer
     _buildBuffer: (arg, opts = {}) ->
         if typeof arg is 'number'
             @_buffer = new Buffer arg
-            @length = 0
+            @_writeOffset = 0
         else if Buffer.isBuffer arg
             @_buffer = arg
-            ###*
-             * length of data part
-             * @type {Number}
-            ###
-            @length = arg.length
+
+            @_writeOffset = arg.length
         else
             @_buffer = new Buffer arg, opts.encoding
-            @length = @_buffer.length
+            @_writeOffset = @_buffer.length
 
     _newBufferSize: (delta) ->
         if not @_buffer.length
@@ -73,7 +70,7 @@ class FlexBuffer
             else
                 @_buffer.length + delta
         else
-            @length + delta
+            @_writeOffset + delta
 
     _resize: (delta) ->
         oldBuffer = @_buffer
@@ -86,12 +83,11 @@ class FlexBuffer
         @_resizeTime += 1
 
     _resizeIfRequired: (delta) ->
-        if @length + delta > @_buffer.length
+        if @_writeOffset + delta > @_buffer.length
             @_resize(delta)
 
-
     _writeByte: (byteNum) ->
-        @_buffer[@length++] = byteNum
+        @_buffer[@_writeOffset++] = byteNum
 
     _writeNumber: (num) ->
         @_resizeIfRequired 1
@@ -102,8 +98,8 @@ class FlexBuffer
         len = buf.length
         @_resizeIfRequired len
 
-        buf.copy @_buffer, @length
-        @length += len
+        buf.copy @_buffer, @_writeOffset
+        @_writeOffset += len
         len
 
     _writeArray: (arr) ->
@@ -117,12 +113,12 @@ class FlexBuffer
     _writeString: (str, encoding) ->
         len = Buffer.byteLength str, encoding
         @_resizeIfRequired len
-        @_buffer.write str, @length, len, encoding
-        @length += len
+        @_buffer.write str, @_writeOffset, len, encoding
+        @_writeOffset += len
         len
 
     ###*
-     * Write/append a byte | array of bytes | buffer | string to the block
+     * Write/append a byte | array of bytes | buffer | string to the tail of the buffer
      * @param  {number | string | Array | Buffer}  value     The value to write
      * @param  {string="utf8"}                     encoding  string encoding
     ###
@@ -188,7 +184,7 @@ class FlexBuffer
      * Flush the buffer, clear all data, won't release space.
     ###
     flush: ->
-        @length = 0
+        @_writeOffset = 0
 
 Object.defineProperties FlexBuffer::,
     ###*
@@ -198,19 +194,19 @@ Object.defineProperties FlexBuffer::,
     'bufferLength':
         get: -> if @_buffer then @_buffer.length else 0
     ###*
-     * free space length
-     * @type {number}
+     * length of data part
+     * @type {Number}
     ###
-    'freeLength':
-        get: -> if @_buffer then @_buffer.length - @length else 0
+    'length':
+        get: -> @_writeOffset
 
 # Extend native Buffer API
 
 _writerBuilder = (len, k, v) ->
     FlexBuffer::[k] = (val) ->
         @_resizeIfRequired len
-        v.call @_buffer, val, @length, false
-        @length += len
+        v.call @_buffer, val, @_writeOffset, false
+        @_writeOffset += len
         len
 
 for k, v of Buffer::
@@ -229,8 +225,8 @@ for k, v of Buffer::
             else
                 FlexBuffer::[k] = (val, byteLength) ->
                     @_resizeIfRequired 6
-                    len = v.call @_buffer, val, @length, byteLength, false
-                    @length = len
+                    len = v.call @_buffer, val, @_writeOffset, byteLength, false
+                    @_writeOffset = len
                     len
     else
         do (k, v) ->
