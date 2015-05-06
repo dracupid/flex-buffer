@@ -1,3 +1,6 @@
+### v0.4.1
+= fix: wrpper bug
+
 ### v0.4.0
 - fix: bug
 
