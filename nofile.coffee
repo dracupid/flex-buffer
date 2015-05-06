@@ -17,6 +17,12 @@ module.exports = (task) ->
     task 'test', ->
         $.mocha()
 
+    task 'memory', ->
+        kit.spawn 'coffee', ['./test/memory.coffee']
+        .catch (e) ->
+            console.error e
+            process.exit 1
+
     task 'benchmark', ->
         kit.spawn 'coffee', ['./benchmark/benchmark.coffee']
         .catch ->
