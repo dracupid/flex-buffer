@@ -16,20 +16,11 @@ class FlexBuffer
          * @type {number}
          * @private
         ###
+        @_initArg = arg
+        @_initOpts = opts
         @_resizeTime = 0
-        if typeof arg is 'number'
-            @_buffer = new Buffer arg
-            @length = 0
-        else if Buffer.isBuffer arg
-            @_buffer = arg
-            ###*
-             * length of data part
-             * @type {Number}
-            ###
-            @length = arg.length
-        else
-            @_buffer = new Buffer arg, opts.encoding
-            @length = @_buffer.length
+
+        @_buildBuffer arg, opts
 
         ###*
          * Grow factor of the flex buffer. </br>
@@ -44,6 +35,21 @@ class FlexBuffer
         ###
         @SAFE_BUFFER_LENGTH = opts.safeBufferLength or DEFAULT_SAFE_BUFFER_LENGTH
         @
+
+    _buildBuffer: (arg, opts) ->
+        if typeof arg is 'number'
+            @_buffer = new Buffer arg
+            @length = 0
+        else if Buffer.isBuffer arg
+            @_buffer = arg
+            ###*
+             * length of data part
+             * @type {Number}
+            ###
+            @length = arg.length
+        else
+            @_buffer = new Buffer arg, opts.encoding
+            @length = @_buffer.length
 
     _newBufferSize: (delta) ->
         if not @_buffer.length
@@ -150,6 +156,27 @@ class FlexBuffer
             _resizeTime: #{@_resizeTime}
             _buffer: #{@_buffer.inspect()}
         """
+
+    ###*
+     * Release the buffer and create a buffer using initial state.
+    ###
+    reset: ->
+        @_resizeTime = 0
+        @release()
+        @_buildBuffer @_initArg, @_initOpts
+
+    ###*
+     * release buffer
+    ###
+    release: ->
+        @buffer = null
+        @flush()
+
+    ###*
+     * Flush the buffer, clean all data, don't release space.
+    ###
+    flush: ->
+        @length = 0
 
 Object.defineProperties FlexBuffer::,
     ###*

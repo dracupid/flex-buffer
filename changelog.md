@@ -1,3 +1,6 @@
+### v0.3.0
+- new api: release, reset, flush
+
 ### v0.2.0
 - Performance optimization, much faster now.
     + Write Number

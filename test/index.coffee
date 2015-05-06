@@ -116,6 +116,39 @@ describe "convert", ->
         buf = new FB "ABD"
         eq buf.toString(), "ABD"
 
+describe "gc", ->
+    it "reset", ->
+        buf = new FB 10
+        buf.write [1..10]
+        buf.write "sadasd"
+        buf.write 3
+        eq buf.length, 17
+        buf.reset()
+        eq buf.bufferLength, 10
+        eq buf.length, 0
+        eq buf._resizeTime, 0
+    it "release", ->
+        buf = new FB 10
+        buf.write [1..10]
+        buf.write "sadasd"
+        buf.write 3
+        eq buf.length, 17
+        buf.release()
+        eq buf.bufferLength, 20
+        eq buf.length, 0
+        eq buf._resizeTime, 1
+    it "flush", ->
+        buf = new FB 10
+        buf.write [1..10]
+        buf.write "sadasd"
+        buf.write 3
+        eq buf.length, 17
+        buf.flush()
+        eq buf.bufferLength, 20
+        eq buf.length, 0
+        eq buf._resizeTime, 1
+
+
 describe "extended Buffer util API", ->
     if testBuf.equals
         it '#equals', ->

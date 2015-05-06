@@ -52,24 +52,24 @@ fBuf.writeUInt32LE(165);
 
     SAFE_BUFFER_LENGTH
 
-- #### <a href="./src/index.coffee?source#L29" target="_blank"><b>length</b></a>
-  length of data part
-
-  - **<u>type</u>**: { _Number_ }
-
-- #### <a href="./src/index.coffee?source#L40" target="_blank"><b>GROW\_FACTOR</b></a>
+- #### <a href="./src/index.coffee?source#L31" target="_blank"><b>GROW\_FACTOR</b></a>
   Grow factor of the flex buffer. </br>
   > If the buffer is full, it will be resized to its `origin length * grow factor` <br/>
   > If grow factor is 0, the buffer will be resized to its `origin length + input data's length`
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L45" target="_blank"><b>SAFE\_BUFFER_LENGTH</b></a>
+- #### <a href="./src/index.coffee?source#L36" target="_blank"><b>SAFE\_BUFFER_LENGTH</b></a>
   If buffer length exceeds this length, it will grow as grow factor is 0.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L111" target="_blank"><b>write(value, encoding = "utf8")</b></a>
+- #### <a href="./src/index.coffee?source#L49" target="_blank"><b>length</b></a>
+  length of data part
+
+  - **<u>type</u>**: { _Number_ }
+
+- #### <a href="./src/index.coffee?source#L117" target="_blank"><b>write(value, encoding = "utf8")</b></a>
   Write/append a byte | array of bytes | buffer | string to the block
 
   - **<u>param</u>**: `value` { _number | string | Array | Buffer_ }
@@ -80,7 +80,7 @@ fBuf.writeUInt32LE(165);
 
     string encoding
 
-- #### <a href="./src/index.coffee?source#L130" target="_blank"><b>slice(start =  0, end =  this.length, newBuffer = false)</b></a>
+- #### <a href="./src/index.coffee?source#L136" target="_blank"><b>slice(start =  0, end =  this.length, newBuffer = false)</b></a>
   The same as Buffer.slice applied on data part of the buffer, with an additional newBuffer argument.
 
   - **<u>param</u>**: `start` { _number = 0_ }
@@ -99,7 +99,7 @@ fBuf.writeUInt32LE(165);
 
     data buffer
 
-- #### <a href="./src/index.coffee?source#L139" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
+- #### <a href="./src/index.coffee?source#L145" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
   Return data part of the buffer.
 
   - **<u>param</u>**: `newBuffer` { _boolean=false_ }
@@ -110,12 +110,21 @@ fBuf.writeUInt32LE(165);
 
     data buffer
 
-- #### <a href="./src/index.coffee?source#L159" target="_blank"><b>bufferLength</b></a>
+- #### <a href="./src/index.coffee?source#L163" target="_blank"><b>reset</b></a>
+  Release the buffer and create a buffer using initial state.
+
+- #### <a href="./src/index.coffee?source#L171" target="_blank"><b>release</b></a>
+  release buffer
+
+- #### <a href="./src/index.coffee?source#L178" target="_blank"><b>flush</b></a>
+  Flush the buffer, clean all data, don't release space.
+
+- #### <a href="./src/index.coffee?source#L186" target="_blank"><b>bufferLength</b></a>
   internal buffer's length, including free space.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L165" target="_blank"><b>freeLength</b></a>
+- #### <a href="./src/index.coffee?source#L192" target="_blank"><b>freeLength</b></a>
   free space length
 
   - **<u>type</u>**: { _number_ }
