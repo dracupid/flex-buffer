@@ -1,3 +1,7 @@
+### v0.3.1
+- new api: FlexBuffer.SAFE_BUFFER_LENGTH, FlexBuffer.GROW_FACTOR
+- fix: a memory release bug
+
 ### v0.3.0
 - new api: release, reset, flush
 
