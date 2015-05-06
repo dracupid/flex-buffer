@@ -74,13 +74,8 @@ fBuf.writeUInt32LE(165);
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L61" target="_blank"><b>length</b></a>
-  length of data part
-
-  - **<u>type</u>**: { _Number_ }
-
-- #### <a href="./src/index.coffee?source#L129" target="_blank"><b>write(value, encoding = "utf8")</b></a>
-  Write/append a byte | array of bytes | buffer | string to the block
+- #### <a href="./src/index.coffee?source#L125" target="_blank"><b>write(value, encoding = "utf8")</b></a>
+  Write/append a byte | array of bytes | buffer | string to the tail of the buffer
 
   - **<u>param</u>**: `value` { _number | string | Array | Buffer_ }
 
@@ -90,7 +85,7 @@ fBuf.writeUInt32LE(165);
 
     string encoding
 
-- #### <a href="./src/index.coffee?source#L148" target="_blank"><b>slice(start =  0, end =  this.length, newBuffer = false)</b></a>
+- #### <a href="./src/index.coffee?source#L144" target="_blank"><b>slice(start =  0, end =  this.length, newBuffer = false)</b></a>
   The same as Buffer.slice applied on data part of the buffer, with an additional newBuffer argument.
 
   - **<u>param</u>**: `start` { _number = 0_ }
@@ -109,7 +104,7 @@ fBuf.writeUInt32LE(165);
 
     data buffer
 
-- #### <a href="./src/index.coffee?source#L157" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
+- #### <a href="./src/index.coffee?source#L153" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
   Return data part of the buffer.
 
   - **<u>param</u>**: `newBuffer` { _boolean=false_ }
@@ -120,24 +115,24 @@ fBuf.writeUInt32LE(165);
 
     data buffer
 
-- #### <a href="./src/index.coffee?source#L175" target="_blank"><b>reset</b></a>
+- #### <a href="./src/index.coffee?source#L171" target="_blank"><b>reset</b></a>
   Release the buffer and create a buffer using initial state.
 
-- #### <a href="./src/index.coffee?source#L183" target="_blank"><b>release</b></a>
+- #### <a href="./src/index.coffee?source#L179" target="_blank"><b>release</b></a>
   Release the buffer
 
-- #### <a href="./src/index.coffee?source#L190" target="_blank"><b>flush</b></a>
+- #### <a href="./src/index.coffee?source#L186" target="_blank"><b>flush</b></a>
   Flush the buffer, clear all data, won't release space.
 
-- #### <a href="./src/index.coffee?source#L198" target="_blank"><b>bufferLength</b></a>
+- #### <a href="./src/index.coffee?source#L194" target="_blank"><b>bufferLength</b></a>
   internal buffer's length, including free space.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L204" target="_blank"><b>freeLength</b></a>
-  free space length
+- #### <a href="./src/index.coffee?source#L200" target="_blank"><b>length</b></a>
+  length of data part
 
-  - **<u>type</u>**: { _number_ }
+  - **<u>type</u>**: { _Number_ }
 
 
 

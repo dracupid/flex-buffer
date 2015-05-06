@@ -1,3 +1,6 @@
+### v0.4.0
+- fix: bug
+
 ### v0.3.1
 - new api: FlexBuffer.SAFE_BUFFER_LENGTH, FlexBuffer.GROW_FACTOR
 - fix: a memory release bug
