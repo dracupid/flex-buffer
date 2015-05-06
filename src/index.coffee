@@ -1,7 +1,20 @@
-DEFAULT_SAFE_BUFFER_LENGTH = 10 * 1024 * 1024 # 10M
-DEFAULT_GROW_FACTOR = 2
-
 class FlexBuffer
+    ###*
+     * Grow factor of the flex buffer. </br>
+     * > If the buffer is full, it will be resized to its `origin length * grow factor` <br/>
+     * > If grow factor is 0, the buffer will be resized to its `origin length + input data's length`
+     * @type {number}
+     * @prefix FlexBuffer.
+    ###
+    @SAFE_BUFFER_LENGTH: 10 * 1024 * 1024 # 10M
+
+    ###*
+     * If buffer length exceeds this length, it will grow as grow factor is 0.
+     * @type {number}
+     * @prefix FlexBuffer.
+    ###
+    @GROW_FACTOR: 2
+
     ###*
      * Flex Buffer constructor
      * @param  {number | Buffer | Array | string} arg   The same arg as Buffer, number is only initial byte size. Default is 1024.
@@ -23,20 +36,19 @@ class FlexBuffer
         @_buildBuffer arg, opts
 
         ###*
-         * Grow factor of the flex buffer. </br>
-         * > If the buffer is full, it will be resized to its `origin length * grow factor` <br/>
-         * > If grow factor is 0, the buffer will be resized to its `origin length + input data's length`
+         * Grow factor of this flex buffer.
          * @type {number}
         ###
-        @GROW_FACTOR = opts.growFactor or DEFAULT_GROW_FACTOR
+        @GROW_FACTOR = opts.growFactor or FlexBuffer.GROW_FACTOR
+
         ###*
-         * If buffer length exceeds this length, it will grow as grow factor is 0.
+         * Safe buffer length for this flex buffer.
          * @type {number}
         ###
-        @SAFE_BUFFER_LENGTH = opts.safeBufferLength or DEFAULT_SAFE_BUFFER_LENGTH
+        @SAFE_BUFFER_LENGTH = opts.safeBufferLength or FlexBuffer.SAFE_BUFFER_LENGTH
         @
 
-    _buildBuffer: (arg, opts) ->
+    _buildBuffer: (arg, opts = {}) ->
         if typeof arg is 'number'
             @_buffer = new Buffer arg
             @length = 0
@@ -166,14 +178,14 @@ class FlexBuffer
         @_buildBuffer @_initArg, @_initOpts
 
     ###*
-     * release buffer
+     * Release the buffer
     ###
     release: ->
-        @buffer = null
+        @_buffer = null
         @flush()
 
     ###*
-     * Flush the buffer, clean all data, don't release space.
+     * Flush the buffer, clear all data, won't release space.
     ###
     flush: ->
         @length = 0
@@ -184,13 +196,13 @@ Object.defineProperties FlexBuffer::,
      * @type {number}
     ###
     'bufferLength':
-        get: -> @_buffer.length
+        get: -> if @_buffer then @_buffer.length else 0
     ###*
      * free space length
      * @type {number}
     ###
     'freeLength':
-        get: -> @_buffer.length - @length
+        get: -> if @_buffer then @_buffer.length - @length else 0
 
 # Extend native Buffer API
 
