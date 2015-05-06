@@ -134,7 +134,7 @@ describe "gc", ->
         buf.write 3
         eq buf.length, 17
         buf.release()
-        eq buf.bufferLength, 20
+        eq buf.bufferLength, 0
         eq buf.length, 0
         eq buf._resizeTime, 1
     it "flush", ->
