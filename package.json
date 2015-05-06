@@ -1,6 +1,6 @@
 {
   "name": "flex-buffer",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A flexible buffer with a complete but limited Buffer API.",
   "main": "index.js",
   "scripts": {
