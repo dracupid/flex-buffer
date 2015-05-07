@@ -110,7 +110,7 @@ class FlexBuffer
         len
 
     _writeString: (str, encoding) ->
-        len = Buffer.byteLength str, encoding
+        len = Buffer.byteLength str, encoding # This is a obvious overhead.
         @_resizeIfRequired len
         @_buffer.write str, @_writeOffset, len, encoding
         @_writeOffset += len
