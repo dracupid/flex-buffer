@@ -120,6 +120,7 @@ class FlexBuffer
      * Write/append a byte | array of bytes | buffer | string to the tail of the buffer
      * @param  {number | string | Array | Buffer}  value     The value to write
      * @param  {string="utf8"}                     encoding  string encoding
+     * @return {number}                                      length to write
     ###
     write: (value, encoding) ->
         if typeof value is 'number'
@@ -219,7 +220,7 @@ for k, v of Buffer::
         do (k, v) ->
             arr = k.match /\d+/
             if arr and arr[0]
-                _writerBuilder.call @, parseInt(arr[0]) / 8, k, v
+                _writerBuilder.call @, arr[0] / 8, k, v
             else if /Double/.test k
                 _writerBuilder.call @, 8, k, v
             else if /Float/.test k
