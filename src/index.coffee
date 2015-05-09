@@ -1,3 +1,5 @@
+"use strict"
+
 class FlexBuffer
     ###*
      * Grow factor of the flex buffer. </br>
