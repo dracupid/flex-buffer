@@ -19,7 +19,7 @@
     "coffeelint": "*",
     "mocha": "^2.2.4",
     "nodoc": "^0.2.3",
-    "nokit": "^0.6.8",
+    "nokit": "0.6.6",
     "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git"
   },
   "directories": {
