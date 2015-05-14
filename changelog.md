@@ -1,5 +1,8 @@
+### v0.4.2
+- minor opt
+
 ### v0.4.1
-= fix: wrpper bug
+- fix: wrpper bug
 
 ### v0.4.0
 - fix: bug
