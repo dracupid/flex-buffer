@@ -17,9 +17,9 @@
     "benchmark": "git+https://github.com/bestiejs/benchmark.js.git",
     "coffee-script": "*",
     "coffeelint": "*",
-    "mocha": "^2.2.4",
-    "nodoc": "^0.2.3",
-    "nokit": "0.6.6",
+    "mocha": "^2.2.5",
+    "nodoc": "^0.2.4",
+    "nokit": "0.7.0",
     "dracupid-no": "git+https://github.com/dracupid/dracupid-no.git"
   },
   "directories": {
