@@ -7,7 +7,6 @@ A flexible buffer with a complete but limited Buffer API.
 - Tested on Node 0.8-0.12, latest iojs on Mac, Linux and Windows.
 
 [![NPM version](https://badge.fury.io/js/flex-buffer.svg)](https://www.npmjs.com/package/flex-buffer)
-[![Deps](https://david-dm.org/dracupid/flex-buffer.svg?style=flat)](https://david-dm.org/dracupid/flex-buffer)
 [![Build Status](https://travis-ci.org/dracupid/flex-buffer.svg)](https://travis-ci.org/dracupid/flex-buffer)
 [![Build status](https://ci.appveyor.com/api/projects/status/github/dracupid/flex-buffer?svg=true)](https://ci.appveyor.com/project/dracupid/flex-buffer)
 
@@ -29,19 +28,20 @@ fBuf.writeUInt32LE(165);
 ## API
 
 
-- #### <a href="./src/index.coffee?source#L11" target="_blank"><b>FlexBuffer.SAFE\_BUFFER_LENGTH</b></a>
+- #### <a href="./src/index.coffee?source#L12" target="_blank"><b>FlexBuffer.SAFE\_BUFFER_LENGTH</b></a>
   Grow factor of the flex buffer. </br>
-  > If the buffer is full, it will be resized to its `origin length * grow factor` <br/>
-  > If grow factor is 0, the buffer will be resized to its `origin length + input data's length`
+  > If the buffer is full, it will be resized to its `origin length * grow factor`. <br/>
+  > A falsey SAFE_BUFFER_LENGTH means unlimited, which may be unsafe. <br/>
+  > If grow factor is 0, the buffer will be resized to its `origin length + input data's length`.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L18" target="_blank"><b>FlexBuffer.GROW\_FACTOR</b></a>
+- #### <a href="./src/index.coffee?source#L19" target="_blank"><b>FlexBuffer.GROW\_FACTOR</b></a>
   If buffer length exceeds this length, it will grow as grow factor is 0.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L28" target="_blank"><b>constructor(arg, opts = {})</b></a>
+- #### <a href="./src/index.coffee?source#L29" target="_blank"><b>constructor(arg, opts = {})</b></a>
   Flex Buffer constructor
 
   - **<u>param</u>**: `arg` { _number | Buffer | Array | string_ }
@@ -64,17 +64,17 @@ fBuf.writeUInt32LE(165);
 
     SAFE_BUFFER_LENGTH
 
-- #### <a href="./src/index.coffee?source#L44" target="_blank"><b>GROW\_FACTOR</b></a>
+- #### <a href="./src/index.coffee?source#L45" target="_blank"><b>GROW\_FACTOR</b></a>
   Grow factor of this flex buffer.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L50" target="_blank"><b>SAFE\_BUFFER_LENGTH</b></a>
+- #### <a href="./src/index.coffee?source#L51" target="_blank"><b>SAFE\_BUFFER_LENGTH</b></a>
   Safe buffer length for this flex buffer.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L127" target="_blank"><b>write(value, encoding = "utf8")</b></a>
+- #### <a href="./src/index.coffee?source#L130" target="_blank"><b>write(value, encoding = "utf8")</b></a>
   Write/append a byte | array of bytes | buffer | string to the tail of the buffer
 
   - **<u>param</u>**: `value` { _number | string | Array | Buffer_ }
@@ -89,7 +89,7 @@ fBuf.writeUInt32LE(165);
 
     length to write
 
-- #### <a href="./src/index.coffee?source#L146" target="_blank"><b>slice(start =  0, end =  this.length, newBuffer = false)</b></a>
+- #### <a href="./src/index.coffee?source#L149" target="_blank"><b>slice(start =  0, end =  this.length, newBuffer = false)</b></a>
   The same as Buffer.slice applied on data part of the buffer, with an additional newBuffer argument.
 
   - **<u>param</u>**: `start` { _number = 0_ }
@@ -108,7 +108,7 @@ fBuf.writeUInt32LE(165);
 
     data buffer
 
-- #### <a href="./src/index.coffee?source#L155" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
+- #### <a href="./src/index.coffee?source#L158" target="_blank"><b>toBuffer(newBuffer = false)</b></a>
   Return data part of the buffer.
 
   - **<u>param</u>**: `newBuffer` { _boolean=false_ }
@@ -119,21 +119,21 @@ fBuf.writeUInt32LE(165);
 
     data buffer
 
-- #### <a href="./src/index.coffee?source#L174" target="_blank"><b>reset()</b></a>
+- #### <a href="./src/index.coffee?source#L177" target="_blank"><b>reset()</b></a>
   Release the buffer and create a buffer using initial state.
 
-- #### <a href="./src/index.coffee?source#L183" target="_blank"><b>release()</b></a>
+- #### <a href="./src/index.coffee?source#L186" target="_blank"><b>release()</b></a>
   Release the buffer
 
-- #### <a href="./src/index.coffee?source#L191" target="_blank"><b>flush()</b></a>
+- #### <a href="./src/index.coffee?source#L194" target="_blank"><b>flush()</b></a>
   Flush the buffer, clear all data, won't release space.
 
-- #### <a href="./src/index.coffee?source#L199" target="_blank"><b>bufferLength</b></a>
+- #### <a href="./src/index.coffee?source#L202" target="_blank"><b>bufferLength</b></a>
   internal buffer's length, including free space.
 
   - **<u>type</u>**: { _number_ }
 
-- #### <a href="./src/index.coffee?source#L205" target="_blank"><b>length</b></a>
+- #### <a href="./src/index.coffee?source#L208" target="_blank"><b>length</b></a>
   length of data part
 
   - **<u>type</u>**: { _number_ }

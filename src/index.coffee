@@ -3,9 +3,9 @@
 class FlexBuffer
     ###*
      * Grow factor of the flex buffer. </br>
-     * > If the buffer is full, it will be resized to its `origin length * grow factor` <br/>
-     * > A falsey SAFE_BUFFER_LENGTH means unlimited, which may be unsafe.
-     * > If grow factor is 0, the buffer will be resized to its `origin length + input data's length`
+     * > If the buffer is full, it will be resized to its `origin length * grow factor`. <br/>
+     * > A falsey SAFE_BUFFER_LENGTH means unlimited, which may be unsafe. <br/>
+     * > If grow factor is 0, the buffer will be resized to its `origin length + input data's length`.
      * @type {number}
      * @prefix FlexBuffer.
     ###
