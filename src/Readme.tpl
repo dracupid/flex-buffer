@@ -56,4 +56,4 @@ Environment: io.js v2.0.0, OS X 10.10.2, Intel(R) Core(TM) i7-4870HQ CPU @ 2.50G
     - FlexBuffer x 15,903,934 ops/sec ±1.10% (92 runs sampled)
 
 ## License
-MIT
+MIT@Jingchen Zhao
