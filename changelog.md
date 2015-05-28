@@ -1,3 +1,6 @@
+### v0.4.3
+- Unlimited buffer supported.
+
 ### v0.4.2
 - minor opt
 

@@ -4,6 +4,7 @@ class FlexBuffer
     ###*
      * Grow factor of the flex buffer. </br>
      * > If the buffer is full, it will be resized to its `origin length * grow factor` <br/>
+     * > A falsey SAFE_BUFFER_LENGTH means unlimited, which may be unsafe.
      * > If grow factor is 0, the buffer will be resized to its `origin length + input data's length`
      * @type {number}
      * @prefix FlexBuffer.
@@ -64,6 +65,8 @@ class FlexBuffer
     _newBufferSize: (delta) ->
         if not @_buffer.length
             delta
+        else if not @SAFE_BUFFER_LENGTH
+            newSize = @_buffer.length * @GROW_FACTOR
         else if @_buffer.length < @SAFE_BUFFER_LENGTH and @GROW_FACTOR isnt 0
             newSize = @_buffer.length * @GROW_FACTOR
             if newSize - @_buffer.length > delta
