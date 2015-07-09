@@ -5,6 +5,8 @@ $ = require('dracupid-no')(kit)
 module.exports = (task) ->
     task 'build', "Build Project", (opts) ->
         $.coffee disable: 'missing_fat_arrows'
+        .then ->
+            kit.remove 'dist/Readme.tpl'
 
     task 'doc', ->
         nodoc = require 'nodoc'
