@@ -152,20 +152,22 @@ npm test
 npm run benchmark
 ```
 
-Environment: io.js v2.0.0, OS X 10.10.2, Intel(R) Core(TM) i7-4870HQ CPU @ 2.50GHz
+Environment: io.js v2.3,3, OS X 10.10.4, Intel(R) Core(TM) i7-4870HQ CPU @ 2.50GHz
 
 - Write Number
-    - Buffer x 1,926,430 ops/sec ±0.77% (94 runs sampled)
-    - FlexBuffer x 2,644,722 ops/sec ±0.63% (93 runs sampled)
+    - Buffer x 1,960,975 ops/sec ±0.34% (96 runs sampled)
+    - FlexBuffer x 2,708,359 ops/sec ±0.11% (92 runs sampled)
+
 
 - Write String
-    - Buffer x 795,720 ops/sec ±0.78% (92 runs sampled)
-    - FlexBuffer x 445,640 ops/sec ±0.90% (94 runs sampled)
-    - FlexBuffer(ascii) x 822,147 ops/sec ±1.42% (86 runs sampled)
+    - Buffer x 779,358 ops/sec ±0.36% (94 runs sampled)
+    - FlexBuffer x 294,180 ops/sec ±0.46% (96 runs sampled)
+    - FlexBuffer(ascii) x 844,705 ops/sec ±0.65% (94 runs sampled)
+
 
 - wrapped native API
-    - Buffer x 23,160,784 ops/sec ±0.94% (92 runs sampled)
-    - FlexBuffer x 15,903,934 ops/sec ±1.10% (92 runs sampled)
+    - Buffer x 20,544,389 ops/sec ±0.24% (96 runs sampled)
+    - FlexBuffer x 13,983,617 ops/sec ±0.48% (95 runs sampled)
 
 ## License
 MIT@Jingchen Zhao
