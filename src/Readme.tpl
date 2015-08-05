@@ -40,22 +40,42 @@ npm test
 npm run benchmark
 ```
 
-Environment: io.js v2.3,3, OS X 10.10.4, Intel(R) Core(TM) i7-4870HQ CPU @ 2.50GHz
+Environment: , OS X 10.10.4, Intel(R) Core(TM) i7-4870HQ CPU @ 2.50GHz
 
+**io.js v2.4.0**
 - Write Number
-    - Buffer x 1,960,975 ops/sec ±0.34% (96 runs sampled)
-    - FlexBuffer x 2,708,359 ops/sec ±0.11% (92 runs sampled)
+    - Buffer x 1,967,194 ops/sec ±0.48% (95 runs sampled)
+    - FlexBuffer x 2,608,820 ops/sec ±0.32% (96 runs sampled)
 
 
 - Write String
-    - Buffer x 779,358 ops/sec ±0.36% (94 runs sampled)
-    - FlexBuffer x 294,180 ops/sec ±0.46% (96 runs sampled)
-    - FlexBuffer(ascii) x 844,705 ops/sec ±0.65% (94 runs sampled)
+    - Buffer x 776,848 ops/sec ±0.64% (93 runs sampled)
+    - FlexBuffer x 290,386 ops/sec ±0.54% (92 runs sampled)
+    - FlexBuffer(ascii) x 824,243 ops/sec ±1.18% (93 runs sampled)
 
 
 - wrapped native API
-    - Buffer x 20,544,389 ops/sec ±0.24% (96 runs sampled)
-    - FlexBuffer x 13,983,617 ops/sec ±0.48% (95 runs sampled)
+    - Buffer x 19,973,789 ops/sec ±0.59% (94 runs sampled)
+    - FlexBuffer x 14,407,768 ops/sec ±0.50% (93 runs sampled)
+
+
+**io.js v3.0.0**
+> Due to changes in V8, io.js has reimplemented Buffer on top of V8's Uint8Array. Thus, Buffer instantiation is measurably slower. Access operations may be faster in some circumstances but the exact performance profile and difference over previous versions will depend on how Buffer is used within applications. See [io.js changelog](https://github.com/nodejs/io.js/blob/master/CHANGELOG.md#2015-08-04-version-300-rvagg) for more info.
+
+- Write Number
+    - Buffer x 1,448,511 ops/sec ±0.49% (94 runs sampled)
+    - FlexBuffer x 1,137,468 ops/sec ±0.39% (95 runs sampled)
+
+
+- Write String
+    - Buffer x 519,786 ops/sec ±0.56% (95 runs sampled)
+    - FlexBuffer x 238,278 ops/sec ±0.77% (90 runs sampled)
+    - FlexBuffer(ascii) x 506,659 ops/sec ±1.36% (83 runs sampled)
+
+
+- wrapped native API
+    - Buffer x 10,587,654 ops/sec ±1.06% (94 runs sampled)
+    - FlexBuffer x 7,510,308 ops/sec ±0.47% (94 runs sampled)
 
 ## License
 MIT@Jingchen Zhao

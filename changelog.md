@@ -1,3 +1,6 @@
+### v0.5.0
+- adapt for io.js 3.0
+
 ### v0.4.3
 - Unlimited buffer supported.
 
