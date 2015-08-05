@@ -217,12 +217,27 @@ _writerBuilder = (len, k, v) ->
         @_writeOffset += len
         len
 
-for k, v of Buffer::
+
+BufferKeys = Object.keys Buffer::
+
+Object.defineProperties FlexBuffer::,
+    'parent':
+        enumerable: true
+        get: -> @toBuffer(false).parent
+    'offset':
+        enumerable: true
+        get: -> @toBuffer(false).offset
+
+for k in BufferKeys
+    if k in ['parent', 'offset']
+        continue
+
+    v = Buffer::[k]
     if FlexBuffer::[k]? or typeof v isnt 'function'
         continue
 
-    if k.indexOf('write') is 0
-        do (k, v) ->
+    do (k, v) ->
+        if k.indexOf('write') is 0
             arr = k.match /\d+/
             if arr and arr[0]
                 _writerBuilder.call @, arr[0] / 8, k, v
@@ -236,8 +251,7 @@ for k, v of Buffer::
                     v.call @_buffer, val, @_writeOffset, byteLength, false
                     @_writeOffset += byteLength
                     byteLength
-    else
-        do (k, v) ->
+        else
             FlexBuffer::[k] = ->
                 dataBuf = @toBuffer false
                 v.apply dataBuf, arguments
